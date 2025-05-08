@@ -1,4 +1,3 @@
-//import TestComponent from "@/components/TestComponent";
 import BlogCard from "@/components/BlogCard";
 import getPostMetadata from "@/utils/getPostMetadata";
 
@@ -11,7 +10,6 @@ export default function Home() {
         {postMetadata.map((post, index) => {
           return <BlogCard key={index} post={post} />;
         })}
-        {/* <TestComponent /> */}
       </div>
     </div>
   );
