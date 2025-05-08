@@ -1,36 +1,142 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📝 Techno Blog
 
-## Getting Started
+Techno Blog is a modern blogging platform powered by **Markdown**, **GitHub**, and **Vercel**. Authors can write blog posts in Markdown, upload them securely, and trigger automatic deployments — no CMS required.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Features
+
+- Write blog posts in `.md` files
+- Embed local (`/public`) or external images
+- Secure file uploads via API with secret key
+- GitHub integration using the Content API
+- Auto-deploy via Vercel on upload
+
+---
+
+## ✍️ How to Publish a Blog Post
+
+### 1. Write Your Blog Post in Markdown
+
+Create a Markdown file using any editor:
+
+```markdown
+# My First Post
+
+Welcome to **Techno Blog**!
+
+## Highlights
+
+- Markdown formatting
+- List support
+- Image embedding
+
+![Banner](/images/banner.jpg)
+
+External images also work:
+
+![External](https://example.com/image.png)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. Embed Images
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+You can embed:
 
-## Learn More
+- **Local images** stored in `/public` (e.g., `/images/my-image.jpg`)
+- **External images** from trusted domains
 
-To learn more about Next.js, take a look at the following resources:
+#### For External Images:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Add allowed domains to `next.config.js`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```js
+// next.config.js
+module.exports = {
+  images: {
+    domains: ["example.com", "cdn.example.com"],
+  },
+};
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 3. Upload the Markdown File
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Use the API endpoint to upload your blog post:
+
+```
+POST /api/upload-md
+```
+
+#### Required Header
+
+Add a secret header to authenticate your upload:
+
+```http
+x-upload-secret: YOUR_UPLOAD_SECRET
+```
+
+#### Payload
+
+Send a `multipart/form-data` request with your `.md` file:
+
+- Field: `file`
+- Value: Your `.md` file
+
+---
+
+### 4. GitHub Integration
+
+Uploaded posts are:
+
+- Committed to the **`main` branch** of your GitHub repo
+- Saved inside the `/blogs` folder
+- Automatically deployed by **Vercel**
+
+---
+
+## 🛡️ Security
+
+- All uploads require a secret key via `x-upload-secret` header
+- Unauthorized requests will be rejected with `401 Unauthorized`
+
+---
+
+## ✅ Deployment Workflow
+
+1. Markdown file is uploaded via API
+2. File is pushed to GitHub using the Content API
+3. GitHub commit triggers a Vercel deployment
+4. Blog post is live 🚀
+
+---
+
+## 📂 Folder Structure
+
+```
+/blogs           # Markdown source files
+/public/images   # Locally hosted images
+/pages/api       # API for file upload
+/utils           # Markdown and GitHub helpers
+```
+
+---
+
+## 👨‍💻 Built With
+
+- **Next.js** – React Framework
+- **Tailwind CSS** – Styling
+- **markdown-to-jsx** – Markdown rendering
+- **gray-matter** – Frontmatter parsing
+- **GitHub Content API** – Remote file commits
+- **Vercel** – Hosting and CI/CD
+
+---
+
+## 🔗 Author
+
+Made with ❤️ by [Muntasir Sunny](https://muntasirsunny.vercel.app/)
+
+---
