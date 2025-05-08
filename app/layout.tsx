@@ -50,7 +50,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {header}
-        {children}
+        <main className="flex-1 w-full container mx-auto px-4">{children}</main>
         {footer}
       </body>
     </html>
