@@ -18,7 +18,8 @@ export const generateStaticParams = async () => {
 };
 
 export async function generateMetadata({ params, searchParams }: any) {
-  const { data } = getPostContent(params.slug);
+  const param = await params;
+  const { data } = getPostContent(param.slug);
 
   return {
     title: data?.title
@@ -30,14 +31,15 @@ export async function generateMetadata({ params, searchParams }: any) {
     openGraph: {
       title: data?.title,
       description: data?.description,
-      url: `https://yourdomain.com/blogs/${params.slug}`,
+      url: `https://yourdomain.com/blogs/${param.slug}`,
       type: "article",
     },
   };
 }
 
-const BlogPage = (props: any) => {
-  const slug = props.params.slug;
+const BlogPage = async (props: any) => {
+  const param = await props.params;
+  const slug = param.slug;
   const post = getPostContent(slug);
 
   return (
